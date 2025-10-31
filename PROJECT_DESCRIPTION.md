@@ -2,13 +2,13 @@
 
 **Project #1 - Web Portfolio for Creative Coding Class**
 
-## 🌊 Live Demo
+## Live Demo
 [View Live Website](https://yourusername.github.io/ocean-dreams/)
 *(Replace with your actual GitHub Pages URL)*
 
 ---
 
-## 📋 Project Overview
+## Project Overview
 
 **Ocean Dreams** is an interactive art portfolio featuring three unique p5.js sketches inspired by marine ecosystems. The project combines creative coding techniques with ocean conservation awareness, creating an immersive web experience that celebrates the beauty of our oceans.
 
@@ -24,7 +24,7 @@ All pages are interconnected through a consistent navigation system, allowing se
 
 ---
 
-## 💭 Thought Process
+## Thought Process
 
 ### Concept Development
 
@@ -47,7 +47,7 @@ The "insane" design approach meant embracing bold colors, high particle counts, 
 
 ---
 
-## ⚡ Challenges Encountered
+## Challenges Encountered
 
 ### 1. Performance Optimization
 **Problem**: Rendering 20,000 particles in the Jellyfish sketch caused frame drops on some devices.
@@ -91,7 +91,7 @@ The "insane" design approach meant embracing bold colors, high particle counts, 
 
 ---
 
-## 🛠️ Technical Implementation
+## Technical Implementation
 
 ### Technologies Used
 - **p5.js 1.9.0** - Creative coding framework
@@ -127,24 +127,24 @@ The "insane" design approach meant embracing bold colors, high particle counts, 
 
 ---
 
-## 📁 File Structure
+## File Structure
 
 ```
 ocean-dreams/
-├── index.html              Landing page with particle animation
-├── jellyfish.html          20,000 particle jellyfish sketch
-├── coral.html              Coral reef ecosystem sketch
-├── waves.html              Multi-layer ocean waves sketch
-├── about.html              Project info and conservation resources
-├── PROJECT_DESCRIPTION.md  This file (for submission)
-└── README.md               GitHub repository description
+|-- index.html              Landing page with particle animation
+|-- jellyfish.html          20,000 particle jellyfish sketch
+|-- coral.html              Coral reef ecosystem sketch
+|-- waves.html              Multi-layer ocean waves sketch
+|-- about.html              Project info and conservation resources
+|-- PROJECT_DESCRIPTION.md  This document for submission
+`-- README.md               GitHub repository description
 ```
 
 **Note**: All sketches are self-contained in single HTML files for simplicity. CSS and JavaScript are embedded to avoid external dependencies.
 
 ---
 
-## 🎨 Design Philosophy
+## Design Philosophy
 
 ### "Totally Insane" Approach
 
@@ -160,7 +160,7 @@ The goal was to create an **overwhelming** but **cohesive** experience - like di
 
 ---
 
-## 🌍 Ocean Conservation Message
+## Ocean Conservation Message
 
 While the project is primarily an artistic portfolio, it carries an environmental message:
 
@@ -174,13 +174,13 @@ The About page includes links to:
 
 ---
 
-## 🚀 Deployment Instructions
+## Deployment Instructions
 
 ### GitHub Pages Setup
 
 1. Create a new GitHub repository named `ocean-dreams`
 2. Upload all HTML files to the repository
-3. Go to Settings → Pages
+3. Go to Settings -> Pages
 4. Select "Deploy from main branch"
 5. Your site will be live at `https://yourusername.github.io/ocean-dreams/`
 
@@ -197,21 +197,21 @@ python -m http.server 8000
 
 ---
 
-## 📊 Browser Compatibility
+## Browser Compatibility
 
-✅ **Tested and working on:**
+**Tested and working on:**
 - Chrome 90+ (recommended)
 - Firefox 88+
 - Safari 14+
 - Edge 90+
 
-⚠️ **Performance notes:**
+**Performance notes:**
 - Mobile devices may experience lag on the Jellyfish sketch (20,000 particles)
 - Recommended for desktop/laptop viewing for best experience
 
 ---
 
-## 🎓 What I Learned
+## What I Learned
 
 1. **Large-scale particle systems** - Managing 20,000 particles taught me about performance optimization
 2. **Polar coordinate math** - Understanding how trigonometry creates complex patterns
@@ -221,7 +221,7 @@ python -m http.server 8000
 
 ---
 
-## 🔮 Future Enhancements
+## Future Enhancements
 
 If I continue developing this project:
 
@@ -233,7 +233,7 @@ If I continue developing this project:
 
 ---
 
-## 📝 Credits
+## Credits
 
 - **p5.js** - Processing Foundation
 - **Original Jellyfish Algorithm** - Adapted from personal sketch in p5.js Web Editor
@@ -242,6 +242,6 @@ If I continue developing this project:
 
 ---
 
-**Made with 💙 for the Ocean**
+**Made with love for the Ocean**
 
 *This project is submitted as Project #1 for [Creative Coding Class Name]. All code is original except where noted.*

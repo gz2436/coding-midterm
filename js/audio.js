@@ -1,57 +1,57 @@
-// 音频管理系统 - 背景音乐 + 交互音效 + 音乐可视化
-// 使用 p5.sound.js 实现
+// Audio manager - background score, interactive cues, and visualisation
+// Powered by p5.sound.js
 
 class AudioManager {
   constructor() {
-    this.bgMusic = null;          // 背景音乐
-    this.clickOsc = null;          // 点击音效振荡器
-    this.hoverOsc = null;          // 悬停音效振荡器
-    this.fft = null;               // FFT 分析器
-    this.amplitude = null;         // 振幅分析器
+    this.bgMusic = null;          // Background music source
+    this.clickOsc = null;          // Click sound oscillator
+    this.hoverOsc = null;          // Hover sound oscillator
+    this.fft = null;               // FFT analyser
+    this.amplitude = null;         // Amplitude analyser
     this.isPlaying = false;
-    this.volume = 0.7;             // 默认音量 70%
+    this.volume = 0.7;             // Default volume level
     this.isInitialized = false;
 
-    // 免费音频资源链接（示例 - 需要替换为实际文件）
+    // Placeholder for external audio sources
     this.musicSources = [
-      // 使用免费的海洋氛围音频（Freesound.org）
-      // 由于浏览器限制，这里使用振荡器生成环境音
-      null // 将使用程序生成音频
+      // Example ocean ambience from Freesound
+      // Browser limits require oscillator-based ambience here
+      null // Replace with a hosted audio file to bypass synthesis
     ];
   }
 
-  // 初始化音频系统
+  // Initialise the audio system
   async init() {
     if (this.isInitialized) return;
 
     try {
-      // 等待用户交互后初始化
+      // Wait for user interaction before initialising
       await this.setupAudioContext();
 
-      // 创建 FFT 分析器
+      // Build the FFT analyser
       this.fft = new p5.FFT(0.8, 512);
 
-      // 创建振幅分析器
+      // Build the amplitude analyser
       this.amplitude = new p5.Amplitude();
 
-      // 创建程序生成的背景音乐（深海氛围）
+      // Build the procedural deep sea ambience
       this.createGenerativeMusic();
 
-      // 创建交互音效振荡器
+      // Prepare interactive oscillators
       this.setupInteractiveSounds();
 
       this.isInitialized = true;
-      console.log('✓ 音频系统初始化完成');
+      console.log('Audio system ready');
 
-      // 通知 sketch 音频已就绪
+      // Notify sketches that audio is ready
       this.connectToSketch();
 
     } catch (error) {
-      console.error('音频初始化失败:', error);
+      console.error('Audio initialisation failed:', error);
     }
   }
 
-  // 设置音频上下文（需要用户交互）
+  // Establish the audio context (requires user gesture)
   async setupAudioContext() {
     return new Promise((resolve) => {
       if (getAudioContext().state === 'running') {
@@ -64,55 +64,55 @@ class AudioManager {
     });
   }
 
-  // 创建生成式环境音乐
+  // Create generative ambience
   createGenerativeMusic() {
-    // 创建多层振荡器模拟深海氛围
+    // Layer oscillators to emulate the deep sea
     this.layer1 = new p5.Oscillator('sine');
     this.layer2 = new p5.Oscillator('sine');
     this.layer3 = new p5.Oscillator('sine');
     this.layer4 = new p5.Oscillator('triangle');
 
-    // 低频层（深海低音）
+    // Low frequency layer
     this.layer1.freq(55);    // A1
     this.layer1.amp(0.15);
 
-    // 中低频层
+    // Lower mid layer
     this.layer2.freq(82.41); // E2
     this.layer2.amp(0.1);
 
-    // 中频层（和声）
+    // Mid layer for harmony
     this.layer3.freq(110);   // A2
     this.layer3.amp(0.08);
 
-    // 高频层（泛音）
+    // High harmonic layer
     this.layer4.freq(220);   // A3
     this.layer4.amp(0.05);
 
-    // 添加混响效果
+    // Add reverberation
     this.reverb = new p5.Reverb();
     this.reverb.process(this.layer1, 6, 3);
     this.reverb.process(this.layer2, 6, 3);
     this.reverb.process(this.layer3, 5, 2);
     this.reverb.process(this.layer4, 4, 2);
 
-    // 启动所有层
+    // Start every layer
     this.layer1.start();
     this.layer2.start();
     this.layer3.start();
     this.layer4.start();
 
-    // 动态调制频率（模拟海浪）
+    // Modulate frequencies to mimic tides
     this.modulateFrequencies();
 
-    console.log('✓ 生成式音乐已创建');
+    console.log('Generative score initialised');
   }
 
-  // 动态调制频率（创造流动感）
+  // Modulate frequencies to create flow
   modulateFrequencies() {
     setInterval(() => {
       if (!this.isPlaying) return;
 
-      // 随机微调频率，创造自然变化
+      // Slight randomised detuning for natural motion
       let time = millis() / 1000;
 
       this.layer1.freq(55 + sin(time * 0.1) * 2);
@@ -120,31 +120,31 @@ class AudioManager {
       this.layer3.freq(110 + sin(time * 0.2) * 5);
       this.layer4.freq(220 + sin(time * 0.25) * 8);
 
-      // 振幅调制
+      // Amplitude modulation
       this.layer1.amp(0.15 + sin(time * 0.3) * 0.05);
       this.layer2.amp(0.1 + cos(time * 0.4) * 0.03);
 
     }, 100);
   }
 
-  // 设置交互音效
+  // Configure interactive audio cues
   setupInteractiveSounds() {
-    // 点击音效（水滴声）
+    // Click effect (water droplet)
     this.clickOsc = new p5.Oscillator('sine');
     this.clickOsc.amp(0);
     this.clickOsc.freq(800);
     this.clickOsc.start();
 
-    // 悬停音效（柔和高音）
+    // Hover effect (soft high tone)
     this.hoverOsc = new p5.Oscillator('sine');
     this.hoverOsc.amp(0);
     this.hoverOsc.freq(1200);
     this.hoverOsc.start();
 
-    console.log('✓ 交互音效已设置');
+    console.log('Interactive cues armed');
   }
 
-  // 连接到当前 sketch
+  // Connect to the active sketch
   connectToSketch() {
     if (typeof window.jellyfishSketch !== 'undefined') {
       window.jellyfishSketch.initAudio(this);
@@ -153,40 +153,40 @@ class AudioManager {
     }
   }
 
-  // 播放背景音乐
+  // Start background score
   play() {
     if (!this.isInitialized) {
-      console.warn('音频系统尚未初始化');
+      console.warn('Audio manager not initialised yet');
       return;
     }
 
     if (this.isPlaying) return;
 
-    // 启动所有音频层
+    // Raise each oscillator
     this.layer1.amp(0.15 * this.volume, 1.0);
     this.layer2.amp(0.1 * this.volume, 1.0);
     this.layer3.amp(0.08 * this.volume, 1.0);
     this.layer4.amp(0.05 * this.volume, 1.0);
 
     this.isPlaying = true;
-    console.log('▶ 音乐播放中');
+    console.log('Audio playback started');
   }
 
-  // 暂停背景音乐
+  // Pause background score
   pause() {
     if (!this.isPlaying) return;
 
-    // 淡出所有层
+    // Fade every oscillator
     this.layer1.amp(0, 1.0);
     this.layer2.amp(0, 1.0);
     this.layer3.amp(0, 1.0);
     this.layer4.amp(0, 1.0);
 
     this.isPlaying = false;
-    console.log('⏸ 音乐已暂停');
+    console.log('Audio playback paused');
   }
 
-  // 切换播放/暂停
+  // Toggle playback state
   toggle() {
     if (this.isPlaying) {
       this.pause();
@@ -195,7 +195,7 @@ class AudioManager {
     }
   }
 
-  // 设置音量
+  // Set master volume
   setVolume(vol) {
     this.volume = constrain(vol, 0, 1);
 
@@ -207,18 +207,18 @@ class AudioManager {
     }
   }
 
-  // 触发点击音效（水滴）
+  // Trigger click droplet
   playClickSound() {
     if (!this.isInitialized) return;
 
-    // 快速音高下降模拟水滴
+    // Fast pitch drop to emulate a droplet
     this.clickOsc.freq(1200, 0);
     this.clickOsc.freq(400, 0.1);
     this.clickOsc.amp(0.3 * this.volume, 0.01);
     this.clickOsc.amp(0, 0.15);
   }
 
-  // 触发悬停音效
+  // Trigger hover tone
   playHoverSound() {
     if (!this.isInitialized) return;
 
@@ -227,7 +227,7 @@ class AudioManager {
     this.hoverOsc.amp(0, 0.2);
   }
 
-  // 获取频谱数据
+  // Return FFT spectrum
   getSpectrum() {
     if (this.fft) {
       return this.fft.analyze();
@@ -235,7 +235,7 @@ class AudioManager {
     return [];
   }
 
-  // 获取特定频段能量
+  // Return requested band energy
   getEnergy(band) {
     if (this.fft) {
       return this.fft.getEnergy(band);
@@ -244,30 +244,30 @@ class AudioManager {
   }
 }
 
-// 全局音频管理器实例
+// Global audio manager instance
 let audioManager = null;
 
-// 页面加载完成后初始化
+// Log readiness once the page loads
 window.addEventListener('DOMContentLoaded', () => {
-  console.log('音频管理器准备中...');
+  console.log('Audio manager standing by...');
 });
 
-// 在 sketch 准备好之后初始化音频
+// Kick off initialisation once sketches are ready
 window.onSketchReady = async function() {
-  console.log('Sketch 已准备，初始化音频...');
+  console.log('Sketch ready, initialising audio...');
 
   if (!audioManager) {
     audioManager = new AudioManager();
   }
 
-  // 隐藏加载屏幕，显示欢迎屏幕
+  // Hide loading overlay and reveal welcome screen
   setTimeout(() => {
     document.getElementById('loading-screen').classList.add('hidden');
     document.getElementById('welcome-screen').classList.remove('hidden');
   }, 500);
 };
 
-// 开始按钮点击事件
+// Start button handler
 document.addEventListener('DOMContentLoaded', () => {
   const startBtn = document.getElementById('start-btn');
   const welcomeScreen = document.getElementById('welcome-screen');
@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const bottomNav = document.getElementById('bottom-nav');
 
   startBtn.addEventListener('click', async () => {
-    // 初始化音频系统
+    // Initialise the audio system
     if (!audioManager) {
       audioManager = new AudioManager();
     }
@@ -283,17 +283,17 @@ document.addEventListener('DOMContentLoaded', () => {
     await audioManager.init();
     audioManager.play();
 
-    // 隐藏欢迎屏幕
+    // Hide welcome overlay
     welcomeScreen.classList.add('hidden');
 
-    // 显示控制面板和导航
+    // Reveal control panel and navigation
     setTimeout(() => {
       controlPanel.classList.remove('hidden');
       bottomNav.classList.remove('hidden');
     }, 300);
   });
 
-  // 音频控制按钮
+  // Audio toggle button
   const audioToggle = document.getElementById('audio-toggle');
   const audioIcon = document.getElementById('audio-icon');
   const audioStatus = document.getElementById('audio-status');
@@ -304,15 +304,15 @@ document.addEventListener('DOMContentLoaded', () => {
     audioManager.toggle();
 
     if (audioManager.isPlaying) {
-      audioIcon.textContent = '🔊';
-      audioStatus.textContent = '播放中';
+      audioIcon.textContent = 'ON';
+      audioStatus.textContent = 'Playing';
     } else {
-      audioIcon.textContent = '🔇';
-      audioStatus.textContent = '已暂停';
+      audioIcon.textContent = 'OFF';
+      audioStatus.textContent = 'Paused';
     }
   });
 
-  // 音量滑块
+  // Volume slider
   const volumeSlider = document.getElementById('volume-slider');
   const volumeValue = document.getElementById('volume-value');
 
@@ -324,14 +324,14 @@ document.addEventListener('DOMContentLoaded', () => {
     volumeValue.textContent = e.target.value + '%';
   });
 
-  // 侧边面板切换
+  // Side panel toggle
   const togglePanelBtn = document.getElementById('toggle-panel');
   togglePanelBtn.addEventListener('click', () => {
     controlPanel.classList.toggle('open');
   });
 });
 
-// 全局函数供 sketch 调用
+// Global helpers for sketches
 window.triggerClickSound = function() {
   if (audioManager) {
     audioManager.playClickSound();

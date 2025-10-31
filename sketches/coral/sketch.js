@@ -1,5 +1,5 @@
-// 珊瑚礁生态系统 - 生成艺术
-// 模拟色彩斑斓的珊瑚礁和游动的鱼群
+// Coral reef ecosystem - generative art
+// Emulates colourful coral reefs with roaming fish
 
 let corals = [];
 let fishes = [];
@@ -11,15 +11,15 @@ function setup() {
   let canvas = createCanvas(windowWidth, windowHeight);
   canvas.parent('canvas-container');
 
-  // 生成珊瑚
+  // Generate corals
   generateCorals();
 
-  // 生成鱼群
+  // Spawn fish
   for (let i = 0; i < 15; i++) {
     fishes.push(new Fish());
   }
 
-  // 生成气泡
+  // Spawn bubbles
   for (let i = 0; i < 30; i++) {
     bubbles.push(new Bubble());
   }
@@ -34,19 +34,19 @@ function initAudio(audioManager) {
     fft = audioManager.fft;
     amplitude = audioManager.amplitude;
     audioReady = true;
-    console.log('✓ 珊瑚礁作品：音频已连接');
+    console.log('Coral reef sketch connected to audio');
   }
 }
 
 function generateCorals() {
-  // 在底部生成多组珊瑚
+  // Create coral clusters near the base
   let positions = [0.2, 0.35, 0.5, 0.65, 0.8];
 
   positions.forEach(pos => {
     let x = width * pos;
     let baseY = height * 0.8;
 
-    // 每个位置生成 2-4 个珊瑚
+    // Spawn two to four corals per anchor
     let count = floor(random(2, 5));
     for (let i = 0; i < count; i++) {
       corals.push(new Coral(x + random(-50, 50), baseY, random(0, 360)));
@@ -61,12 +61,12 @@ function windowResized() {
 }
 
 function draw() {
-  // 海洋渐变背景
+  // Draw ocean gradient backdrop
   setGradient(0, 0, width, height,
     color(15, 76, 129),
     color(3, 34, 76));
 
-  // 获取音频能量
+  // Sample audio energy
   let bassEnergy = 0;
   let midEnergy = 0;
   if (audioReady && fft) {
@@ -74,24 +74,24 @@ function draw() {
     midEnergy = fft.getEnergy("mid") / 255.0;
   }
 
-  // 绘制珊瑚
+  // Render corals
   corals.forEach(coral => {
     coral.display(bassEnergy);
   });
 
-  // 更新和绘制气泡
+  // Update and render bubbles
   bubbles.forEach(bubble => {
     bubble.update(midEnergy);
     bubble.display();
   });
 
-  // 更新和绘制鱼
+  // Update and render fish
   fishes.forEach(fish => {
     fish.update();
     fish.display();
   });
 
-  // 鼠标交互：吸引鱼群
+  // Mouse interaction: attract fish
   if (mouseIsPressed) {
     fishes.forEach(fish => {
       fish.attractTo(mouseX, mouseY);
@@ -99,7 +99,7 @@ function draw() {
   }
 }
 
-// 珊瑚类
+// Coral class
 class Coral {
   constructor(x, y, hue) {
     this.x = x;
@@ -128,18 +128,18 @@ class Coral {
     this.branches.forEach((branch, i) => {
       push();
 
-      // 音频驱动摇摆
+      // Audio-driven sway
       let sway = sin(frameCount * 0.02 + i) * 5;
       sway += audioEnergy * 10;
       rotate(branch.angle + radians(sway));
 
-      // 绘制分支（逐渐变细）
+      // Draw tapering branches
       for (let seg = 0; seg < branch.segments; seg++) {
         let t = seg / branch.segments;
         let segLength = branch.length / branch.segments;
         let segWidth = branch.width * (1 - t * 0.7);
 
-        // 颜色渐变
+        // Apply colour gradient
         let c = color((this.hue + seg * 20) % 360, 80, 70);
         fill(c);
         noStroke();
@@ -147,7 +147,7 @@ class Coral {
         ellipse(0, -segLength/2, segWidth, segLength * 1.2);
         translate(0, -segLength);
 
-        // 添加小触须
+        // Add small tendrils
         if (seg === branch.segments - 1) {
           for (let k = 0; k < 3; k++) {
             push();
@@ -164,7 +164,7 @@ class Coral {
   }
 }
 
-// 鱼类
+// Fish class
 class Fish {
   constructor() {
     this.reset();
@@ -183,12 +183,12 @@ class Fish {
     this.x += this.vx;
     this.y += this.vy;
 
-    // 边界检测
+    // Boundary check
     if (this.x < -100 || this.x > width + 100) {
       this.reset();
     }
 
-    // 轻微的上下波动
+    // Gentle vertical bobbing
     this.vy += random(-0.1, 0.1);
     this.vy = constrain(this.vy, -1, 1);
   }
@@ -208,16 +208,16 @@ class Fish {
     push();
     translate(this.x, this.y);
 
-    // 鱼朝向运动方向
+    // Align fish to velocity
     let angle = atan2(this.vy, this.vx);
     rotate(angle);
 
-    // 鱼身体
+    // Draw body
     fill(this.hue, 80, 90);
     noStroke();
     ellipse(0, 0, this.size, this.size * 0.6);
 
-    // 尾巴
+    // Draw tail
     fill(this.hue, 70, 80);
     triangle(
       -this.size * 0.5, 0,
@@ -225,7 +225,7 @@ class Fish {
       -this.size * 0.9, this.size * 0.3
     );
 
-    // 眼睛
+    // Draw eye
     fill(255);
     ellipse(this.size * 0.3, 0, this.size * 0.15);
     fill(0);
@@ -235,7 +235,7 @@ class Fish {
   }
 }
 
-// 气泡类
+// Bubble class
 class Bubble {
   constructor() {
     this.reset();
@@ -264,7 +264,7 @@ class Bubble {
     strokeWeight(1.5);
     ellipse(this.x, this.y, this.size);
 
-    // 高光
+    // Add highlight
     noStroke();
     fill(255, 255, 255, 200);
     ellipse(this.x - this.size * 0.2, this.y - this.size * 0.2, this.size * 0.3);
@@ -272,7 +272,7 @@ class Bubble {
   }
 }
 
-// 渐变背景辅助函数
+// Gradient background helper
 function setGradient(x, y, w, h, c1, c2) {
   noFill();
   for (let i = y; i <= y + h; i++) {
@@ -290,7 +290,7 @@ function mousePressed() {
   return false;
 }
 
-// 导出
+// Export
 if (typeof window !== 'undefined') {
   window.coralSketch = { initAudio };
 }

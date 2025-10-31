@@ -1,4 +1,4 @@
-// 导航和作品切换系统
+// Navigation and sketch switching system
 
 class NavigationManager {
   constructor() {
@@ -16,14 +16,14 @@ class NavigationManager {
   }
 
   setupEventListeners() {
-    // 缩略图点击
+    // Thumbnail click handlers
     const thumbnails = document.querySelectorAll('.thumbnail');
     thumbnails.forEach((thumb, index) => {
       thumb.addEventListener('click', () => {
         this.switchToSketch(index);
       });
 
-      // 悬停音效
+      // Hover sound cue
       thumb.addEventListener('mouseenter', () => {
         if (typeof window.triggerHoverSound === 'function') {
           window.triggerHoverSound();
@@ -31,7 +31,7 @@ class NavigationManager {
       });
     });
 
-    // 左右按钮
+    // Previous and next buttons
     const prevBtn = document.getElementById('nav-prev');
     const nextBtn = document.getElementById('nav-next');
 
@@ -43,7 +43,7 @@ class NavigationManager {
       this.nextSketch();
     });
 
-    // 键盘导航
+    // Keyboard navigation
     document.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowLeft') {
         this.previousSketch();
@@ -52,7 +52,7 @@ class NavigationManager {
       }
     });
 
-    // 触摸滑动支持（移动端）
+    // Touch swipe support (mobile)
     this.setupTouchNavigation();
   }
 
@@ -77,10 +77,10 @@ class NavigationManager {
 
       if (Math.abs(diff) > swipeThreshold) {
         if (diff > 0) {
-          // 向左滑动 - 下一个
+          // Swipe left - next sketch
           this.nextSketch();
         } else {
-          // 向右滑动 - 上一个
+          // Swipe right - previous sketch
           this.previousSketch();
         }
       }
@@ -96,26 +96,26 @@ class NavigationManager {
 
     this.isTransitioning = true;
 
-    // 淡出效果
+    // Fade out the current sketch
     const canvasContainer = document.getElementById('canvas-container');
     canvasContainer.style.transition = 'opacity 0.5s';
     canvasContainer.style.opacity = '0';
 
     setTimeout(() => {
-      // 移除旧的 sketch 脚本
+      // Remove the previous sketch script
       this.removeCurrentSketch();
 
-      // 更新索引
+      // Update the current index
       this.currentIndex = index;
       window.currentSketchIndex = index;
 
-      // 加载新的 sketch
+      // Load the next sketch
       this.loadSketch(index);
 
-      // 更新 UI
+      // Refresh UI state
       this.updateUI();
 
-      // 淡入
+      // Fade back in
       setTimeout(() => {
         canvasContainer.style.opacity = '1';
         this.isTransitioning = false;
@@ -125,16 +125,16 @@ class NavigationManager {
   }
 
   removeCurrentSketch() {
-    // 移除所有 p5 实例
+    // Remove any existing p5 instance
     if (window.remove && typeof window.remove === 'function') {
       window.remove();
     }
 
-    // 清空画布容器
+    // Clear the canvas container
     const canvasContainer = document.getElementById('canvas-container');
     canvasContainer.innerHTML = '';
 
-    // 移除旧的 sketch 脚本
+    // Remove the previous sketch script
     const oldScript = document.querySelector('script[data-sketch-script]');
     if (oldScript) {
       oldScript.remove();
@@ -145,14 +145,14 @@ class NavigationManager {
     const sketch = this.sketches[index];
     if (!sketch) return;
 
-    // 动态加载 sketch 脚本
+    // Dynamically load the sketch script
     const script = document.createElement('script');
     script.src = sketch.script;
     script.setAttribute('data-sketch-script', 'true');
     script.onload = () => {
-      console.log(`✓ 已加载作品: ${sketch.title}`);
+      console.log(`Loaded sketch: ${sketch.title}`);
 
-      // 重新连接音频
+      // Reconnect the shared audio manager
       setTimeout(() => {
         if (audioManager && audioManager.isInitialized) {
           audioManager.connectToSketch();
@@ -175,7 +175,7 @@ class NavigationManager {
   updateUI() {
     const sketch = this.sketches[this.currentIndex];
 
-    // 更新缩略图激活状态
+    // Highlight the active thumbnail
     const thumbnails = document.querySelectorAll('.thumbnail');
     thumbnails.forEach((thumb, index) => {
       if (index === this.currentIndex) {
@@ -185,7 +185,7 @@ class NavigationManager {
       }
     });
 
-    // 更新侧边栏信息
+    // Update sidebar copy
     const sketchTitle = document.getElementById('sketch-title');
     const sketchDescription = document.getElementById('sketch-description');
 
@@ -196,11 +196,11 @@ class NavigationManager {
   }
 }
 
-// 页面加载完成后初始化导航
+// Instantiate navigation after load
 let navigationManager = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 延迟初始化导航，等待用户点击开始
+  // Delay navigation setup until the start button is pressed
   const startBtn = document.getElementById('start-btn');
   const originalClickHandler = startBtn.onclick;
 
@@ -208,13 +208,13 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       if (!navigationManager) {
         navigationManager = new NavigationManager();
-        console.log('✓ 导航系统已初始化');
+        console.log('Navigation system initialised');
       }
     }, 500);
   });
 });
 
-// 导出供外部使用
+// Expose the class globally
 if (typeof window !== 'undefined') {
   window.NavigationManager = NavigationManager;
 }

@@ -1,7 +1,7 @@
 {
   "project": {
-    "title": "海洋保护互动艺术展",
-    "description": "探索海洋之美，感受生命的韵律",
+    "title": "Ocean Conservation Interactive Art Gallery",
+    "description": "Explore the beauty of the ocean and feel the rhythm of life",
     "theme": "ocean-conservation",
     "version": "1.0.0"
   },
@@ -9,97 +9,97 @@
     {
       "id": 0,
       "name": "jellyfish",
-      "title": "水母粒子系统",
-      "description": "20,000 个粒子构成的生命之舞",
+      "title": "Jellyfish Particle System",
+      "description": "A dance of 20,000 luminous particles",
       "type": "interactive-particles",
       "script": "sketches/jellyfish/sketch.js",
       "thumbnail": null,
       "features": [
-        "20,000 粒子实时渲染",
-        "音频频谱驱动颜色变化",
-        "低频驱动整体缩放",
-        "鼠标交互影响粒子流动",
-        "点击触发音效"
+        "Real-time rendering of 20,000 particles",
+        "Audio spectrum driven color shifts",
+        "Low frequencies modulate global scale",
+        "Mouse interaction alters the current",
+        "Click to trigger shimmering chimes"
       ],
       "controls": {
-        "mouse": "移动鼠标影响粒子",
-        "click": "触发音效",
-        "space": "切换颜色模式"
+        "mouse": "Move the mouse to influence the swarm",
+        "click": "Trigger the chime effect",
+        "space": "Toggle color palettes"
       },
       "performance": {
         "complexity": "high",
-        "recommended": "桌面端浏览器"
+        "recommended": "Desktop browsers"
       }
     },
     {
       "id": 1,
       "name": "coral",
-      "title": "珊瑚礁生态",
-      "description": "色彩斑斓的海底花园",
+      "title": "Coral Reef Ecosystem",
+      "description": "A vibrant underwater garden",
       "type": "generative-art",
       "script": "sketches/coral/sketch.js",
       "thumbnail": null,
       "features": [
-        "程序生成的珊瑚森林",
-        "游动的鱼群",
-        "上升的气泡",
-        "音频驱动珊瑚摇摆",
-        "鼠标吸引鱼群"
+        "Procedurally grown coral forest",
+        "Shoals of wandering fish",
+        "Rising, shimmering bubbles",
+        "Audio-driven coral sway",
+        "Mouse attraction field for fish"
       ],
       "controls": {
-        "mouse": "点击并按住吸引鱼群",
-        "click": "触发音效"
+        "mouse": "Click and hold to attract the fish",
+        "click": "Trigger a bubble pop"
       },
       "performance": {
         "complexity": "medium",
-        "recommended": "所有设备"
+        "recommended": "All devices"
       }
     },
     {
       "id": 2,
       "name": "ocean-waves",
-      "title": "海浪韵律",
-      "description": "潮起潮落，永恒的节奏",
+      "title": "Ocean Wave Patterns",
+      "description": "The eternal rhythm of tides",
       "type": "animation",
       "script": "sketches/ocean-waves/sketch.js",
       "thumbnail": null,
       "features": [
-        "多层正弦波叠加",
-        "音频驱动波浪振幅",
-        "水花粒子效果",
-        "鼠标创造涟漪",
-        "流体动画"
+        "Layered sine wave composition",
+        "Audio reactive wave amplitude",
+        "Splash particle embellishments",
+        "Mouse generated ripples",
+        "Fluid-inspired animation"
       ],
       "controls": {
-        "mouse": "点击或拖动创造涟漪",
-        "r": "重置波浪"
+        "mouse": "Click or drag to create ripples",
+        "r": "Reset the wave field"
       },
       "performance": {
         "complexity": "low",
-        "recommended": "所有设备"
+        "recommended": "All devices"
       }
     }
   ],
   "audio": {
     "type": "generative",
-    "description": "程序生成的深海氛围音乐",
+    "description": "Generative deep-sea ambience",
     "features": [
-      "多层振荡器合成",
-      "混响效果",
-      "动态频率调制",
-      "交互音效（水滴、气泡）",
-      "FFT 频谱分析"
+      "Layered oscillator synthesis",
+      "Rich reverberation tail",
+      "Dynamic frequency modulation",
+      "Interactive droplets and bubble cues",
+      "FFT spectrum analysis"
     ]
   },
   "conservation": {
-    "message": "海洋覆盖地球表面的71%，是地球生命的摇篮。保护海洋生态，就是保护我们自己。",
+    "message": "The ocean covers 71% of our planet. Protecting the blue world means protecting ourselves.",
     "resources": [
       {
-        "title": "世界自然基金会 - 海洋保护",
+        "title": "World Wildlife Fund - Ocean Conservation",
         "url": "https://www.worldwildlife.org/initiatives/oceans"
       },
       {
-        "title": "联合国可持续发展目标 - 水下生物",
+        "title": "United Nations Sustainable Development Goal 14 - Life Below Water",
         "url": "https://sdgs.un.org/goals/goal14"
       }
     ]

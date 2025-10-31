@@ -1,9 +1,9 @@
 /* =====================================
-   海洋保护主题 - 全局样式
+   Ocean conservation theme - global styles
    ===================================== */
 
 :root {
-  /* 海洋配色方案 */
+  /* Ocean palette */
   --ocean-deep: #0a1128;
   --ocean-medium: #1a2332;
   --ocean-light: #2c3e5f;
@@ -12,15 +12,15 @@
   --coral-pink: #ff6b9d;
   --wave-blue: #4facfe;
 
-  /* 玻璃态效果 */
+  /* Glassmorphism styling */
   --glass-bg: rgba(255, 255, 255, 0.05);
   --glass-border: rgba(255, 255, 255, 0.1);
   --glass-shadow: rgba(0, 0, 0, 0.3);
 
-  /* 字体 */
+  /* Typography */
   --font-main: 'Poppins', -apple-system, sans-serif;
 
-  /* 动画速度 */
+  /* Animation timing */
   --transition-fast: 0.2s;
   --transition-normal: 0.4s;
   --transition-slow: 0.6s;
@@ -43,7 +43,7 @@ body {
 }
 
 /* =====================================
-   画布容器 - 100% 沉浸式
+   Canvas container - immersive layout
    ===================================== */
 
 #canvas-container {
@@ -60,7 +60,7 @@ body {
 }
 
 /* =====================================
-   加载屏幕
+   Loading screen
    ===================================== */
 
 #loading-screen {
@@ -109,7 +109,7 @@ body {
 }
 
 /* =====================================
-   欢迎屏幕
+   Welcome overlay
    ===================================== */
 
 #welcome-screen {
@@ -197,7 +197,7 @@ body {
 }
 
 /* =====================================
-   侧边控制面板
+   Side control panel
    ===================================== */
 
 #control-panel {
@@ -287,7 +287,7 @@ body {
   color: rgba(255, 255, 255, 0.6) !important;
 }
 
-/* 音频控制按钮 */
+/* Audio control button */
 .control-btn {
   width: 100%;
   padding: 0.75rem 1rem;
@@ -312,7 +312,7 @@ body {
   font-size: 1.25rem;
 }
 
-/* 音量控制 */
+/* Volume control */
 .volume-control {
   margin-top: 1rem;
   display: flex;
@@ -359,7 +359,7 @@ body {
   text-align: right;
 }
 
-/* 交互提示列表 */
+/* Interaction hints */
 .hint-list {
   list-style: none;
   padding-left: 0;
@@ -374,13 +374,13 @@ body {
 }
 
 .hint-list li::before {
-  content: '→';
+  content: '>';
   position: absolute;
   left: 0;
   color: var(--cyan-bright);
 }
 
-/* 海洋保护信息 */
+/* Ocean conservation callout */
 .ocean-info {
   background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(179, 136, 255, 0.1));
   padding: 1.5rem;
@@ -402,7 +402,7 @@ body {
 }
 
 /* =====================================
-   底部导航栏
+   Bottom navigation bar
    ===================================== */
 
 #bottom-nav {
@@ -492,7 +492,7 @@ body {
 }
 
 /* =====================================
-   响应式设计
+   Responsive adjustments
    ===================================== */
 
 @media (max-width: 768px) {
@@ -558,7 +558,7 @@ body {
 }
 
 /* =====================================
-   滚动条样式
+   Scrollbar styling
    ===================================== */
 
 #control-panel::-webkit-scrollbar {
@@ -579,14 +579,14 @@ body {
 }
 
 /* =====================================
-   辅助类
+   Utility classes
    ===================================== */
 
 .hidden {
   display: none !important;
 }
 
-/* 淡入淡出动画 */
+/* Fade animations */
 .fade-in {
   animation: fadeIn var(--transition-normal) ease-in;
 }

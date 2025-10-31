@@ -1,0 +1,77 @@
+USER GUIDE
+==========
+
+Launching the site
+------------------
+Option 1 (recommended): run `./start.sh` from the project root to start a Python HTTP server on port 8000.
+
+Option 2: use Python manually.
+```
+cd /Users/gavincheung/Desktop/coding-mid
+python3 -m http.server 8000
+```
+
+Option 3: any static server works, for example `npx http-server -p 8000` or `php -S localhost:8000`.
+
+Important: open the site through `http://localhost:8000`; loading `index.html` directly from the file system will prevent audio from starting.
+
+First visit flow
+----------------
+1. Navigate to `http://localhost:8000`.
+2. Press **Start Experience** on the welcome overlay.
+3. Grant audio permissions if the browser asks for them.
+
+Navigation basics
+-----------------
+- Move the mouse to influence visuals.
+- Click to trigger sound effects.
+- Use the bottom thumbnails or arrow buttons to switch sketches.
+- Keyboard arrows also switch sketches; press `Esc` to close the control panel if you add that behaviour later.
+
+Sketch reference
+----------------
+Jellyfish Particle System:
+- 20,000 particles updated in real time.
+- Space bar cycles colour palettes.
+- Click to play a shimmer sound and ripple the swarm.
+
+Coral Reef Ecosystem:
+- Procedurally generated corals with swimming fish and bubbles.
+- Hold the mouse to attract the fish school.
+- Click to launch bubble pops.
+
+Ocean Wave Patterns:
+- Layered sine waves with audio reactive amplitude.
+- Click or drag to create ripples.
+- Press `R` to reset the wave field.
+
+Audio system
+------------
+- Generative ambience built from four oscillators and reverb.
+- Hover and click cues use dedicated oscillators for water droplets and chimes.
+- To replace the soundtrack, add a file in `assets/audio/` and swap the synthesis block in `js/audio.js` for `loadSound`.
+
+Troubleshooting
+---------------
+- **No audio:** ensure you interacted with the page, check the floating audio toggle, and confirm the browser did not block autoplay.
+- **Blank canvas:** verify that the CDN scripts are loading; open the developer console for network errors.
+- **Performance dips:** lower `POINT_COUNT` inside `sketches/jellyfish/sketch.js` or reduce the number of coral instances.
+
+Directory layout
+----------------
+```
+coding-mid/
+|-- index.html
+|-- about.html
+|-- jellyfish.html
+|-- coral.html
+|-- waves.html
+|-- css/style.css
+|-- js/audio.js
+|-- js/navigation.js
+|-- data/sketches.json
+`-- sketches/
+    |-- jellyfish/sketch.js
+    |-- coral/sketch.js
+    `-- ocean-waves/sketch.js
+```
