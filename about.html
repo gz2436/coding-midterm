@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - Ocean Dreams</title>
+
+  <!-- p5.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+
+  <!-- Feather Icons -->
+  <script src="https://unpkg.com/feather-icons"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', monospace;
+      background: #000;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+    }
+
+    .nav-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(10, 20, 40, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      border-bottom: 2px solid rgba(0, 217, 255, 0.3);
+    }
+
+    .nav-bar a {
+      color: #00d9ff;
+      text-decoration: none;
+      margin: 0 1rem;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+
+    .nav-bar a:hover {
+      color: #fff;
+      text-shadow: 0 0 10px #00d9ff;
+    }
+
+    .nav-bar .home {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 6rem 2rem 4rem;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 6vw, 4rem);
+      color: #00d9ff;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+    }
+
+    h2 {
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      color: #b388ff;
+      margin: 2rem 0 1rem;
+    }
+
+    h3 {
+      font-size: 1.3rem;
+      color: #00d9ff;
+      margin: 1.5rem 0 0.75rem;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 1rem;
+    }
+
+    .box {
+      background: rgba(10, 20, 40, 0.7);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(0, 217, 255, 0.3);
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .highlight {
+      color: #00d9ff;
+      font-weight: bold;
+    }
+
+    ul {
+      margin: 1rem 0 1rem 2rem;
+      line-height: 1.8;
+    }
+
+    ul li {
+      margin: 0.5rem 0;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    a {
+      color: #00d9ff;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: all 0.3s;
+    }
+
+    a:hover {
+      border-bottom-color: #00d9ff;
+      text-shadow: 0 0 10px #00d9ff;
+    }
+
+    .icon {
+      display: inline-block;
+      margin-right: 0.5rem;
+      color: #00d9ff;
+      vertical-align: middle;
+    }
+
+    @media (max-width: 768px) {
+      .nav-bar {
+        flex-direction: column;
+        padding: 0.5rem;
+      }
+
+      .nav-bar a {
+        margin: 0.3rem;
+        font-size: 0.9rem;
+      }
+
+      .content {
+        padding: 5rem 1.5rem 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav-bar">
+    <a href="index.html" class="home">← OCEAN DREAMS</a>
+    <div>
+      <a href="jellyfish.html">JELLYFISH</a>
+      <a href="coral.html">CORAL</a>
+      <a href="waves.html">WAVES</a>
+      <a href="about.html">ABOUT</a>
+    </div>
+  </nav>
+
+  <div id="canvas-container"></div>
+
+  <div class="content">
+    <h1><i data-feather="droplet" class="icon" width="40" height="40"></i> ABOUT THIS PROJECT</h1>
+
+    <div class="box">
+      <h2>Ocean Conservation Through Art</h2>
+      <p>
+        <span class="highlight">Ocean Dreams</span> is an interactive art portfolio combining
+        creative coding with ocean conservation awareness. Through three unique p5.js sketches,
+        this project explores the beauty and fragility of marine ecosystems.
+      </p>
+      <p>
+        The ocean covers <strong>71% of Earth's surface</strong> and is home to incredible biodiversity.
+        However, it faces unprecedented threats from pollution, climate change, and overfishing.
+        This project aims to inspire appreciation for the ocean through digital art.
+      </p>
+    </div>
+
+    <h2><i data-feather="image" class="icon" width="32" height="32"></i> The Sketches</h2>
+
+    <div class="box">
+      <h3>1. Jellyfish Particle System</h3>
+      <p>
+        A mesmerizing visualization of <strong>20,000 particles</strong> arranged in polar coordinates,
+        creating an ethereal jellyfish-like form. The particles respond to mouse movement and cycle
+        through different color palettes.
+      </p>
+      <p><strong>Techniques:</strong> Polar coordinates, particle systems, mathematical animation</p>
+    </div>
+
+    <div class="box">
+      <h3>2. Coral Reef Ecosystem</h3>
+      <p>
+        A generative art piece featuring procedurally generated coral structures, swimming fish with
+        autonomous behavior, and rising bubbles. The corals sway gently, and fish can be attracted
+        by the mouse cursor.
+      </p>
+      <p><strong>Techniques:</strong> Procedural generation, autonomous agents, gradient backgrounds</p>
+    </div>
+
+    <div class="box">
+      <h3>3. Ocean Waves</h3>
+      <p>
+        Multiple layers of sine waves create the rhythmic motion of ocean waves. Users can interact
+        by creating ripples with mouse clicks and dragging. Water particles add dynamic visual interest.
+      </p>
+      <p><strong>Techniques:</strong> Sine wave layering, particle physics, interactive ripples</p>
+    </div>
+
+    <h2><i data-feather="message-circle" class="icon" width="32" height="32"></i> Thought Process</h2>
+
+    <div class="box">
+      <p>
+        The concept emerged from a desire to merge <strong>technical creativity</strong> with
+        <strong>environmental awareness</strong>. I chose the ocean theme because:
+      </p>
+      <ul>
+        <li>Marine ecosystems are visually stunning and diverse</li>
+        <li>Ocean conservation is a critical global issue</li>
+        <li>Fluid dynamics and organic forms create beautiful animations</li>
+        <li>The theme allows for varied creative interpretations</li>
+      </ul>
+
+      <p>
+        Each sketch explores different aspects of p5.js:
+      </p>
+      <ul>
+        <li><strong>Jellyfish:</strong> Mathematical precision and particle systems</li>
+        <li><strong>Coral Reef:</strong> Object-oriented programming and generative design</li>
+        <li><strong>Waves:</strong> Layering and harmonic motion</li>
+      </ul>
+    </div>
+
+    <h2><i data-feather="zap" class="icon" width="32" height="32"></i> Challenges Encountered</h2>
+
+    <div class="box">
+      <h3>Performance Optimization</h3>
+      <p>
+        Rendering 20,000 particles at 60fps required careful optimization. Using <code>pixelDensity(1)</code>
+        and efficient draw loops helped maintain smooth performance.
+      </p>
+
+      <h3>Responsive Design</h3>
+      <p>
+        Creating a seamless experience across desktop and mobile devices required flexible layouts,
+        touch event handling, and adaptive UI elements.
+      </p>
+
+      <h3>Color Harmony</h3>
+      <p>
+        Balancing vibrant ocean colors while maintaining readability and aesthetic coherence
+        took experimentation with HSB color mode and transparency.
+      </p>
+
+      <h3>Navigation Structure</h3>
+      <p>
+        Designing an intuitive multi-page portfolio that allows easy exploration while
+        keeping each sketch immersive required careful UX consideration.
+      </p>
+    </div>
+
+    <h2><i data-feather="tool" class="icon" width="32" height="32"></i> Technical Stack</h2>
+
+    <div class="box">
+      <ul>
+        <li><strong>p5.js 1.9.0</strong> - Creative coding framework</li>
+        <li><strong>HTML5 & CSS3</strong> - Structure and styling</li>
+        <li><strong>Vanilla JavaScript</strong> - No frameworks needed</li>
+        <li><strong>GitHub Pages</strong> - Hosting platform</li>
+      </ul>
+    </div>
+
+    <h2><i data-feather="globe" class="icon" width="32" height="32"></i> Learn More About Ocean Conservation</h2>
+
+    <div class="box">
+      <p>Here are some resources to learn more about protecting our oceans:</p>
+      <ul>
+        <li><a href="https://www.worldwildlife.org/initiatives/oceans" target="_blank">World Wildlife Fund - Ocean Initiative</a></li>
+        <li><a href="https://sdgs.un.org/goals/goal14" target="_blank">UN Sustainable Development Goal 14: Life Below Water</a></li>
+        <li><a href="https://www.oceana.org/" target="_blank">Oceana - Protecting the World's Oceans</a></li>
+        <li><a href="https://oceanconservancy.org/" target="_blank">Ocean Conservancy</a></li>
+      </ul>
+    </div>
+
+    <div class="box" style="text-align: center; margin-top: 3rem;">
+      <p style="font-size: 1.2rem; color: #00d9ff;">
+        <strong>Made with 💙 for the Ocean</strong>
+      </p>
+      <p style="margin-top: 1rem; font-size: 0.9rem;">
+        <a href="index.html">← Back to Home</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // Subtle background animation
+    let particles = [];
+
+    function setup() {
+      let canvas = createCanvas(windowWidth, windowHeight);
+      canvas.parent('canvas-container');
+
+      for (let i = 0; i < 50; i++) {
+        particles.push(new FloatingParticle());
+      }
+
+      // Initialize feather icons
+      feather.replace();
+    }
+
+    function draw() {
+      clear();
+
+      particles.forEach(p => {
+        p.update();
+        p.display();
+      });
+    }
+
+    function windowResized() {
+      resizeCanvas(windowWidth, windowHeight);
+    }
+
+    class FloatingParticle {
+      constructor() {
+        this.x = random(width);
+        this.y = random(height);
+        this.size = random(2, 8);
+        this.speedY = random(-0.5, -0.1);
+        this.speedX = random(-0.2, 0.2);
+        this.alpha = random(50, 150);
+      }
+
+      update() {
+        this.y += this.speedY;
+        this.x += this.speedX;
+
+        if (this.y < 0) {
+          this.y = height;
+          this.x = random(width);
+        }
+
+        if (this.x < 0) this.x = width;
+        if (this.x > width) this.x = 0;
+      }
+
+      display() {
+        noStroke();
+        fill(0, 217, 255, this.alpha);
+        ellipse(this.x, this.y, this.size);
+      }
+    }
+  </script>
+
+</body>
+</html>

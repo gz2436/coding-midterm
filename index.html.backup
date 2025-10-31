@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>海洋保护 | Ocean Conservation Interactive Art</title>
+  <meta name="description" content="探索海洋之美，感受生命的韵律 - 互动艺术作品展示">
+
+  <!-- p5.js 核心库 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <!-- p5.sound 音频库 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.min.js"></script>
+
+  <!-- 样式表 -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- 主画布容器 -->
+  <div id="canvas-container"></div>
+
+  <!-- 加载提示 -->
+  <div id="loading-screen">
+    <div class="loader"></div>
+    <p>加载中...</p>
+    <p class="hint">请开启音量以获得最佳体验</p>
+  </div>
+
+  <!-- 欢迎屏幕（首次访问） -->
+  <div id="welcome-screen" class="hidden">
+    <div class="welcome-content">
+      <h1>海洋保护互动艺术</h1>
+      <p>探索深海的奥秘，感受生命的韵律</p>
+      <button id="start-btn" class="primary-btn">开始体验</button>
+      <p class="disclaimer">* 本作品包含音频，请确保音量适中</p>
+    </div>
+  </div>
+
+  <!-- 侧边控制面板 -->
+  <div id="control-panel" class="hidden">
+    <button id="toggle-panel" class="panel-toggle">
+      <span class="icon">☰</span>
+    </button>
+
+    <div class="panel-content">
+      <div class="panel-section">
+        <h3>当前作品</h3>
+        <p id="sketch-title">水母粒子系统</p>
+        <p id="sketch-description" class="small-text">20,000 个粒子构成的生命之舞</p>
+      </div>
+
+      <div class="panel-section">
+        <h3>音频控制</h3>
+        <button id="audio-toggle" class="control-btn">
+          <span id="audio-icon">🔊</span>
+          <span id="audio-status">播放中</span>
+        </button>
+
+        <div class="volume-control">
+          <label for="volume-slider">音量</label>
+          <input type="range" id="volume-slider" min="0" max="100" value="70">
+          <span id="volume-value">70%</span>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <h3>交互提示</h3>
+        <ul class="hint-list">
+          <li>移动鼠标：影响粒子流动</li>
+          <li>点击屏幕：触发音效</li>
+          <li>音乐频率：驱动视觉变化</li>
+        </ul>
+      </div>
+
+      <div class="panel-section ocean-info">
+        <h3>海洋保护</h3>
+        <p class="small-text">
+          海洋覆盖地球表面的71%，是地球生命的摇篮。
+          保护海洋生态，就是保护我们自己。
+        </p>
+        <a href="https://www.worldwildlife.org/initiatives/oceans"
+           target="_blank"
+           class="learn-more">了解更多 →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部导航栏 -->
+  <nav id="bottom-nav" class="hidden">
+    <button id="nav-prev" class="nav-btn" aria-label="上一个作品">
+      <span>←</span>
+    </button>
+
+    <div id="sketch-thumbnails" class="thumbnail-container">
+      <div class="thumbnail active" data-sketch="0">
+        <div class="thumb-preview" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+        <span class="thumb-label">水母</span>
+      </div>
+      <div class="thumbnail" data-sketch="1">
+        <div class="thumb-preview" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+        <span class="thumb-label">珊瑚礁</span>
+      </div>
+      <div class="thumbnail" data-sketch="2">
+        <div class="thumb-preview" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+        <span class="thumb-label">海浪</span>
+      </div>
+    </div>
+
+    <button id="nav-next" class="nav-btn" aria-label="下一个作品">
+      <span>→</span>
+    </button>
+  </nav>
+
+  <!-- 音频文件（隐藏） -->
+  <audio id="bg-music" loop preload="auto">
+    <!-- 音频文件将通过 JavaScript 动态加载 -->
+  </audio>
+
+  <!-- JavaScript 模块 -->
+  <script src="js/audio.js"></script>
+  <script src="js/navigation.js"></script>
+  <script>
+    // 全局配置
+    window.SKETCHES_CONFIG = [
+      {
+        id: 0,
+        name: 'jellyfish',
+        title: '水母粒子系统',
+        description: '20,000 个粒子构成的生命之舞',
+        script: 'sketches/jellyfish/sketch.js'
+      },
+      {
+        id: 1,
+        name: 'coral',
+        title: '珊瑚礁生态',
+        description: '色彩斑斓的海底花园',
+        script: 'sketches/coral/sketch.js'
+      },
+      {
+        id: 2,
+        name: 'ocean-waves',
+        title: '海浪韵律',
+        description: '潮起潮落，永恒的节奏',
+        script: 'sketches/ocean-waves/sketch.js'
+      }
+    ];
+
+    // 当前作品索引
+    window.currentSketchIndex = 0;
+  </script>
+
+  <!-- 动态加载第一个作品 -->
+  <script src="sketches/jellyfish/sketch.js"></script>
+
+</body>
+</html>

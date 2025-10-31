@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ocean Dreams - Interactive Art Portfolio</title>
+
+  <!-- p5.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.min.js"></script>
+
+  <!-- Feather Icons -->
+  <script src="https://unpkg.com/feather-icons"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', monospace;
+      overflow-x: hidden;
+      background: #000;
+      color: #fff;
+    }
+
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 10vw, 8rem);
+      font-weight: bold;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 20px rgba(0, 217, 255, 0.8),
+                   0 0 40px rgba(179, 136, 255, 0.6);
+      animation: glow 2s ease-in-out infinite alternate;
+      letter-spacing: 0.1em;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 20px rgba(0, 217, 255, 0.8),
+                     0 0 40px rgba(179, 136, 255, 0.6);
+      }
+      to {
+        text-shadow: 0 0 30px rgba(0, 217, 255, 1),
+                     0 0 60px rgba(179, 136, 255, 0.8),
+                     0 0 80px rgba(255, 107, 157, 0.6);
+      }
+    }
+
+    .subtitle {
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      margin-bottom: 3rem;
+      color: #00d9ff;
+      letter-spacing: 0.2em;
+    }
+
+    .nav-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 250px));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .nav-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(0, 217, 255, 0.3);
+      border-radius: 20px;
+      padding: 2rem;
+      text-decoration: none;
+      color: white;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-card::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: radial-gradient(circle, rgba(0, 217, 255, 0.2), transparent);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .nav-card:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .nav-card:hover {
+      transform: translateY(-10px) scale(1.05);
+      border-color: rgba(0, 217, 255, 0.8);
+      box-shadow: 0 20px 40px rgba(0, 217, 255, 0.3);
+    }
+
+    .nav-card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .nav-card p {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+      position: relative;
+      z-index: 1;
+    }
+
+    .icon {
+      display: block;
+      margin: 0 auto 1rem;
+      color: #00d9ff;
+    }
+
+    .music-btn {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: rgba(0, 217, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(0, 217, 255, 0.5);
+      color: #00d9ff;
+      cursor: pointer;
+      z-index: 101;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .music-btn:hover {
+      background: rgba(0, 217, 255, 0.4);
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(0, 217, 255, 0.6);
+    }
+
+    .music-btn.playing {
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+      }
+      50% {
+        box-shadow: 0 0 30px rgba(0, 217, 255, 0.8);
+      }
+    }
+
+    footer {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 2rem;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.875rem;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 3rem;
+      }
+
+      .nav-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="canvas-container"></div>
+
+  <button id="music-btn" class="music-btn" title="Toggle Music">
+    <i data-feather="volume-2"></i>
+  </button>
+
+  <div class="content">
+    <h1>OCEAN DREAMS</h1>
+    <p class="subtitle">INTERACTIVE ART PORTFOLIO</p>
+
+    <div class="nav-grid">
+      <a href="jellyfish.html" class="nav-card">
+        <i data-feather="circle" class="icon" width="48" height="48"></i>
+        <h2>Jellyfish</h2>
+        <p>20,000 particles dancing in the void</p>
+      </a>
+
+      <a href="coral.html" class="nav-card">
+        <i data-feather="grid" class="icon" width="48" height="48"></i>
+        <h2>Coral Reef</h2>
+        <p>A vibrant underwater garden</p>
+      </a>
+
+      <a href="waves.html" class="nav-card">
+        <i data-feather="activity" class="icon" width="48" height="48"></i>
+        <h2>Ocean Waves</h2>
+        <p>The eternal rhythm of the sea</p>
+      </a>
+
+      <a href="about.html" class="nav-card">
+        <i data-feather="info" class="icon" width="48" height="48"></i>
+        <h2>About</h2>
+        <p>Ocean conservation & info</p>
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <p>SAVE THE OCEAN • PROTECT OUR FUTURE</p>
+  </footer>
+
+  <script>
+    // Background particle animation
+    let particles = [];
+    const particleCount = 100;
+
+    // Music system
+    let osc1, osc2, osc3, reverb;
+    let musicPlaying = false;
+    let musicBtn;
+
+    function setup() {
+      let canvas = createCanvas(windowWidth, windowHeight);
+      canvas.parent('canvas-container');
+
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
+
+      // Setup music
+      setupMusic();
+      musicBtn = document.getElementById('music-btn');
+      musicBtn.addEventListener('click', toggleMusic);
+
+      // Replace feather icons
+      feather.replace();
+
+      // Auto-play music after a short delay
+      setTimeout(() => {
+        if (!musicPlaying) {
+          toggleMusic();
+        }
+      }, 500);
+    }
+
+    function setupMusic() {
+      osc1 = new p5.Oscillator('sine');
+      osc2 = new p5.Oscillator('sine');
+      osc3 = new p5.Oscillator('triangle');
+
+      osc1.freq(65);   // C2
+      osc2.freq(98);   // G2
+      osc3.freq(147);  // D3
+
+      osc1.amp(0);
+      osc2.amp(0);
+      osc3.amp(0);
+
+      reverb = new p5.Reverb();
+      reverb.process(osc1, 8, 4);
+      reverb.process(osc2, 7, 3);
+      reverb.process(osc3, 6, 3);
+
+      osc1.start();
+      osc2.start();
+      osc3.start();
+
+      setInterval(() => {
+        if (musicPlaying) {
+          let t = millis() / 1000;
+          osc1.freq(65 + sin(t * 0.09) * 2);
+          osc2.freq(98 + cos(t * 0.13) * 3);
+          osc3.freq(147 + sin(t * 0.17) * 5);
+        }
+      }, 100);
+    }
+
+    function toggleMusic() {
+      userStartAudio();
+
+      if (musicPlaying) {
+        osc1.amp(0, 1);
+        osc2.amp(0, 1);
+        osc3.amp(0, 1);
+        musicBtn.innerHTML = '<i data-feather="volume-x"></i>';
+        musicBtn.classList.remove('playing');
+        musicPlaying = false;
+        feather.replace();
+      } else {
+        osc1.amp(0.08, 1);
+        osc2.amp(0.04, 1);
+        osc3.amp(0.02, 1);
+        musicBtn.innerHTML = '<i data-feather="volume-2"></i>';
+        musicBtn.classList.add('playing');
+        musicPlaying = true;
+        feather.replace();
+      }
+    }
+
+    function draw() {
+      background(10, 20, 40, 30);
+
+      particles.forEach(p => {
+        p.update();
+        p.display();
+      });
+
+      // Mouse interaction
+      if (mouseIsPressed) {
+        for (let i = 0; i < 5; i++) {
+          particles.push(new Particle(mouseX, mouseY));
+        }
+        if (particles.length > 500) {
+          particles.splice(0, 10);
+        }
+      }
+    }
+
+    function windowResized() {
+      resizeCanvas(windowWidth, windowHeight);
+    }
+
+    class Particle {
+      constructor(x, y) {
+        this.x = x || random(width);
+        this.y = y || random(height);
+        this.vx = random(-1, 1);
+        this.vy = random(-1, 1);
+        this.alpha = random(100, 255);
+        this.size = random(1, 4);
+        this.color = random(['cyan', 'magenta', 'yellow']);
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        // Wrap around
+        if (this.x < 0) this.x = width;
+        if (this.x > width) this.x = 0;
+        if (this.y < 0) this.y = height;
+        if (this.y > height) this.y = 0;
+
+        this.alpha -= 0.5;
+        if (this.alpha <= 0) {
+          this.x = random(width);
+          this.y = random(height);
+          this.alpha = random(100, 255);
+        }
+      }
+
+      display() {
+        noStroke();
+        if (this.color === 'cyan') {
+          fill(0, 217, 255, this.alpha);
+        } else if (this.color === 'magenta') {
+          fill(179, 136, 255, this.alpha);
+        } else {
+          fill(255, 255, 100, this.alpha);
+        }
+        ellipse(this.x, this.y, this.size);
+      }
+    }
+  </script>
+
+</body>
+</html>
